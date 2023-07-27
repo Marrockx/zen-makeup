@@ -17,22 +17,16 @@ def lip_mask(src: np.ndarray, points: np.ndarray, color: list):
 
 def brow_mask(src: np.ndarray, points: np.ndarray, color: list):
 
-    mask = np.zeros_like(src)  # Create a mask
-    # Mask for the required facial feature
+    mask = np.zeros_like(src)
     mask = cv2.fillPoly(mask, [points], color)
-    # Blurring the region, so it looks natural
-    # mask = cv2.cvtColor(mask, cv2.COLOR_RGB2BGR)
     mask = cv2.GaussianBlur(mask, (7, 7), 10)
     return mask
 
 
 def face2_mask(src: np.ndarray, points: np.ndarray, color: list):
 
-    mask = np.zeros_like(src)  # Create a mask
-    # Mask for the required facial feature
+    mask = np.zeros_like(src) 
     mask = cv2.fillPoly(mask, [points], color)
-    # Blurring the region, so it looks natural
-    # mask = cv2.cvtColor(mask, cv2.COLOR_RGB2BGR)
     mask = cv2.GaussianBlur(mask, (7, 7), 5)
     return mask
 
@@ -53,27 +47,6 @@ def blush_mask(src: np.ndarray, points: np.ndarray, color: list, radius: int):
 
         # mask = cv2.cvtColor(mask, cv2.COLOR_RGB2BGR)
     return mask
-
-def mask_skin(src: np.ndarray):
-    """
-    Given a source image of a person (face image)
-    returns a mask that can be identified as the skin
-    """
-    lower = np.array(
-        [0, 133, 77], dtype='uint8')  # The lower bound of skin color
-    # Upper bound of skin color
-    upper = np.array([255, 173, 127], dtype='uint8')
-    dst = cv2.cvtColor(src, cv2.COLOR_BGR2YCR_CB)  # Convert to YCR_CB
-    skin_mask = cv2.inRange(dst, lower, upper)  # Get the skin
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-    # Dilate to fill in blobs
-    skin_mask = cv2.dilate(skin_mask, kernel, iterations=2)[..., np.newaxis]
-
-    if skin_mask.ndim != 3:
-        skin_mask = np.expand_dims(skin_mask, axis=-1)
-    # A binary mask containing only 1s and 0s
-    return (skin_mask / 255).astype("uint8")
-
 
 def face_mask(src: np.ndarray, points: np.ndarray):
     """

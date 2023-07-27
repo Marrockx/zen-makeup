@@ -9,6 +9,7 @@ import numpy as np
 import tempfile
 import time
 from PIL import Image, ImageColor
+import csv
 
 from landmarks import *
 from apply_makeup import *
@@ -94,7 +95,8 @@ if makeup_region is not None:
     if ('EYEBROWS' in makeup_region):
         eyebrows_colour = right_eyebrow_colour = app.sidebar.color_picker(
         "EYEBROWS FILL COLOUR", value="#fffff0", key="EY")
-        makeup.append({"name": "brows", "color": rgb_to_bgr(hex_to_rgb(eyebrows_colour))})
+        makeup.append({"name": "lbrow", "color": rgb_to_bgr(hex_to_rgb(eyebrows_colour))})
+        makeup.append({"name": "rbrow", "color": rgb_to_bgr(hex_to_rgb(eyebrows_colour))})
 
     if ('CHEEKS' in makeup_region):
         blush_colour = app.sidebar.color_picker(
@@ -116,9 +118,7 @@ if makeup_region is not None:
     app.markdown("<h3 style='font-family: Inter; color:#160926; font-size: 24px; font-weight: 700; text-transform: uppercase'>RENDERING FEED</h3>",
                     unsafe_allow_html=True) 
     
-    if apply_button:
-        # app.write(makeup)
-        app.success('Makeup Rendered , you can now save your recording/image of finished look of your choice.');
+   
 
 app.sidebar.markdown('---')
 
@@ -139,13 +139,31 @@ height2 = int(vid2.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 fps_input2 = int(vid2.get(cv2.CAP_PROP_FPS))
 
+app.markdown("**Frame Rate (FPS)**")
+
+app.write(f"<h1 style='text-align: center; color: blue;'>{fps_input2}</h1>", unsafe_allow_html=True)
+
+
 # recording
 codec2 = cv2.VideoWriter_fourcc('V', 'P', '0', '9') # type: ignore
 out2 = cv2.VideoWriter('out2.mp4', codec2, fps_input2, (width2, height2))
     
 fps2 = 0
+i2 = 0
+if apply_button:
+        # app.write(makeup)
+    app.success('Makeup Rendered', icon="✅")
+
+    app.markdown("<hr />", unsafe_allow_html=True)
+
+prevTime = 0
+# Initialize variables
+total_frames = 0
+successful_frames = 0
+threshold_fps = 15  # Set your desired threshold FPS value
 
 while vid2.isOpened():
+    i2+= 1
     try:
         ret_val, frame2 = vid2.read()
         frame2 = cv2.flip(frame2, 1)
@@ -158,7 +176,7 @@ while vid2.isOpened():
 
             feat_applied = apply_all_makeup(frame2, True, features, False)
             # cv2.imshow("ARMakeup", feat_applied)
-
+            
             if cv2.waitKey(1) == 27:
                 break
         try:
@@ -167,9 +185,45 @@ while vid2.isOpened():
         except Exception:
             print("Failed to resize")
             pass
+        
     except Exception:
         print("An error occurred")
         pass
+
+    # FPS counter
+    currTime = time.time()
+    fps = 1 / (currTime - prevTime)
+    prevTime = currTime
+
+    # # Check if FPS exceeds the threshold
+    # if fps > threshold_fps:
+    #     successful_frames += 1
+    
+    # total_frames += 1
+
+    # app.write(f"<h1 style='text-align: center; color: blue;'>{int(fps)}</h1>", unsafe_allow_html=True)
+
+    # # Calculate percentage of successfully tracked frames
+    # success_rate = (successful_frames / total_frames) * 100
+    # print(f"Percentage of successfully tracked frames: {success_rate:.2f}%")
+    # data = [successful_frames, total_frames,int(fps), round(success_rate, 2)]
+
+    # # Open the CSV file in append mode and create a CSV writer object
+    # filename = 'data-movement.csv'
+
+    # with open(filename, 'a', newline='') as csvfile:
+    #     csvwriter = csv.writer(csvfile)
+
+    #     # Write the data as a new row in the CSV file
+    #     csvwriter.writerow(data)
+
+    # # Close the file after writing
+    # csvfile.close()
+
     vid2Frame.image(frame2, channels='BGR', use_column_width=True)
+
+
 vid2.release()
+
 out2.release()
+

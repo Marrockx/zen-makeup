@@ -1,6 +1,6 @@
 from utils import *
 from landmarks import detect_landmarks, normalize_landmarks, plot_landmarks
-from segments import lip_mask, brow_mask, face2_mask, blush_mask, mask_skin
+from segments import lip_mask, brow_mask, face2_mask, blush_mask
 
 
 def apply_all_makeup(src: np.ndarray, is_stream: bool, features: list, show_landmarks: bool = False):
@@ -49,10 +49,6 @@ def apply_all_makeup(src: np.ndarray, is_stream: bool, features: list, show_land
                 face_landmarks = normalize_landmarks(ret_landmarks, height, width, face_conn)
                 mask = face2_mask(output, face_landmarks, feature['color'])
                 output = cv2.addWeighted(output, 1.0, mask, 0.3, 0.0)
-            else:  # Foundation or any other feature
-                skin_mask = mask_skin(output)
-                output = np.where(output * skin_mask >= 1,
-                                  gamma_correction(output, 1.75), output)
 
             if show_landmarks:
                 plot_landmarks(output, feature_landmarks, True) # type: ignore
