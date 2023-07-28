@@ -139,9 +139,9 @@ height2 = int(vid2.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 fps_input2 = int(vid2.get(cv2.CAP_PROP_FPS))
 
-app.markdown("**Frame Rate (FPS)**")
+# app.markdown("**Frame Rate (FPS)**")
 
-app.write(f"<h1 style='text-align: center; color: blue;'>{fps_input2}</h1>", unsafe_allow_html=True)
+# app.write(f"<h1 style='text-align: center; color: blue;'>{fps_input2}</h1>", unsafe_allow_html=True)
 
 
 # recording
