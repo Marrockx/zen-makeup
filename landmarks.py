@@ -39,5 +39,5 @@ def plot_landmarks(src: np.ndarray, landmarks: List, show: bool = False): # type
         cv2.circle(dst, (x, y), 2, 0, cv2.FILLED)
     if show:
         print("Displaying image plotted with landmarks")
-        cv2.imshow("Plotted Landmarks", dst)
+        # cv2.imshow("Plotted Landmarks", dst)
     return dst

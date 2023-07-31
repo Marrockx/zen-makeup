@@ -36,7 +36,10 @@ def apply_all_makeup(src: np.ndarray, is_stream: bool, features: list, show_land
                 feature_landmarks = normalize_landmarks(
                     ret_landmarks, height, width, brows)
                 mask = brow_mask(src, feature_landmarks, feature['color'])
+                
                 output = cv2.addWeighted(src, 1.0, mask, 0.4, 0.0)
+
+
 
             elif feature['name'] == 'blush':
                 blush_landmarks = normalize_landmarks(
@@ -51,7 +54,7 @@ def apply_all_makeup(src: np.ndarray, is_stream: bool, features: list, show_land
                 output = cv2.addWeighted(output, 1.0, mask, 0.3, 0.0)
 
             if show_landmarks:
-                plot_landmarks(output, feature_landmarks, True) # type: ignore
+                output = plot_landmarks(output, feature_landmarks, True) # type: ignore
 
         return output
 
