@@ -78,7 +78,7 @@ makeup_region = app.sidebar.selectbox('Select Region to Apply Makeup', makeup_se
 app.sidebar.markdown('---')
 app.sidebar.subheader('SHADES')
 
-app.sidebar.write(f"<h5 style='text-align: center; color: black; text-align: left;'>Select Colour to Apply</h5>", unsafe_allow_html=True)
+app.sidebar.write(f"<h5 style='text-align: center; font-weight: 300; color: black; text-align: left;'>Select Colour to Apply</h5>", unsafe_allow_html=True)
 
 makeup = [];
 
@@ -133,7 +133,7 @@ app.set_option('deprecation.showfileUploaderEncoding',False)
 path = r"../Videos/video-detect.mp4"
 vid2Frame = app.empty();
 
-vid2 = cv2.VideoCapture(path)
+vid2 = cv2.VideoCapture(0)
 
 width2 = int(vid2.get(cv2.CAP_PROP_FRAME_WIDTH))
 height2 = int(vid2.get(cv2.CAP_PROP_FRAME_HEIGHT))
