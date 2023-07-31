@@ -83,12 +83,12 @@ app.sidebar.write(f"<h5 style='text-align: center; color: black; text-align: lef
 makeup = [];
 
 if makeup_region is not None:
-    if (makeup_region == 'LEFT EYEBROW ONLY'):
+    if ('LEFT EYEBROW' in makeup_region):
         left_eyebrow_colour = app.sidebar.color_picker(
         "LEFT EYEBROW FILL COLOUR", value="#ffff00", key="LEY")
         makeup.append({"name": "lbrow", "color": rgb_to_bgr(hex_to_rgb(left_eyebrow_colour))})
 
-    if (makeup_region == 'RIGHT EYEBROW ONLY'):
+    if ('RIGHT EYEBROW' in makeup_region):
         right_eyebrow_colour = app.sidebar.color_picker(
         "RIGHT EYEBROW FILL COLOUR", value="#ff00ff", key="REY")
         makeup.append({"name": "rbrow", "color": rgb_to_bgr(hex_to_rgb(right_eyebrow_colour))})
@@ -96,7 +96,8 @@ if makeup_region is not None:
     if ('EYEBROWS' in makeup_region):
         eyebrows_colour = right_eyebrow_colour = app.sidebar.color_picker(
         "EYEBROWS FILL COLOUR", value="#fffff0", key="LEY")
-        makeup.append({"name": "brows", "color": rgb_to_bgr(hex_to_rgb(eyebrows_colour))})
+        makeup.append({"name": "lbrow", "color": rgb_to_bgr(hex_to_rgb(eyebrows_colour))})
+        makeup.append({"name": "rbrow", "color": rgb_to_bgr(hex_to_rgb(eyebrows_colour))})
    
     if ('CHEEKS' in makeup_region):
         blush_colour = app.sidebar.color_picker(

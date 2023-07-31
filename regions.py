@@ -2,6 +2,7 @@ makeup_segments = [
     'SELECT REGION',
     'LEFT EYEBROW ONLY',
     'RIGHT EYEBROW ONLY',
+    'LEFT EYEBROW, RIGHT EYEBROW',
     'BOTH EYEBROWS',
     'BOTH CHEEKS',
     'FACE BOUNDARY',
