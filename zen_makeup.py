@@ -130,10 +130,10 @@ app.sidebar.markdown('---')
 app.set_option('deprecation.showfileUploaderEncoding',False)
 
 # record = app.sidebar.button("Record")
-path = r"../Videos/video-detect.mp4"
+path = r"./videos/video-detect.mp4"
 vid2Frame = app.empty();
 
-vid2 = cv2.VideoCapture(0)
+vid2 = cv2.VideoCapture(path)
 
 width2 = int(vid2.get(cv2.CAP_PROP_FRAME_WIDTH))
 height2 = int(vid2.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -147,7 +147,7 @@ fps_input2 = int(vid2.get(cv2.CAP_PROP_FPS))
 
 # recording
 codec2 = cv2.VideoWriter_fourcc('V', 'P', '0', '9') # type: ignore
-out2 = cv2.VideoWriter('out2.mp4', codec2, fps_input2, (width2, height2))
+out2 = cv2.VideoWriter('./videos/out2.mp4', codec2, fps_input2, (width2, height2))
     
 fps2 = 0
 i2 = 0
