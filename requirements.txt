@@ -47,7 +47,7 @@ rich==13.5.1
 six==1.16.0
 smmap==5.0.0
 sounddevice==0.4.6
-streamlit==1.25.0
+streamlit<=1.25.0
 tenacity==8.2.2
 toml==0.10.2
 toolz==0.12.0
