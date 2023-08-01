@@ -246,4 +246,5 @@ while vid2.isOpened():
 vid2.release()
 
 out2.release()
+cv2.destroyAllWindows()
 
