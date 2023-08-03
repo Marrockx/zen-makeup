@@ -52,7 +52,9 @@ app.sidebar.markdown('---')
 
 app.sidebar.subheader('MAKEUP REGIONS')
 
-@app.cache(ttl=24*3600)
+@app.cache_data(ttl=24*3600)
+@app.cache_resource(ttl=24*3600)
+
 
 def image_resize(image, width=None, height=None, inter = cv2.INTER_AREA):
     dim = None
@@ -133,7 +135,7 @@ app.set_option('deprecation.showfileUploaderEncoding',False)
 path = r"./videos/video-detect.mp4"
 vid2Frame = app.empty();
 
-vid2 = cv2.VideoCapture(0)
+vid2 = cv2.VideoCapture(path)
 
 width2 = int(vid2.get(cv2.CAP_PROP_FRAME_WIDTH))
 height2 = int(vid2.get(cv2.CAP_PROP_FRAME_HEIGHT))
