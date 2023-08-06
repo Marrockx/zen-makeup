@@ -21,35 +21,3 @@ brows=left_brow + right_brow
 
 
 
-def face_bbox(src: np.ndarray, offset_x: int = 0, offset_y: int = 0):
-    """
-    Performs face detection on a src image, return bounding box coordinates with
-    an optional offset applied to the coordinates
-    """
-    height, width, _ = src.shape
-    # 0 -> dist <= 2mts from the camera
-    with FaceDetection(model_selection=0) as detector:
-        results = detector.process(cv2.cvtColor(src, cv2.COLOR_BGR2RGB))
-        if not results.detections: # type: ignore
-            return None
-    results = results.detections[0].location_data # type: ignore
-    x_min, y_min = results.relative_bounding_box.xmin, results.relative_bounding_box.ymin
-    box_height, box_width = results.relative_bounding_box.height, results.relative_bounding_box.width
-    x_min = int(width * x_min) - offset_x
-    y_min = int(height * y_min) - offset_y
-    box_height, box_width = int(height * box_height) + \
-        offset_y, int(width * box_width) + offset_x
-    return (x_min, y_min), (box_height, box_width)
-
-
-def gamma_correction(src: np.ndarray, gamma: float, coefficient: int = 1):
-    """
-    Performs gamma correction on a source image
-    gamma > 1 => Darker Image
-    gamma < 1 => Brighted Image
-    """
-    dst = src.copy()
-    dst = dst / 255.  # Converted to float64
-    dst = coefficient * np.power(dst, gamma)
-    dst = (dst * 255).astype('uint8')
-    return dst
