@@ -2,7 +2,6 @@ from utils import *
 from landmarks import detect_landmarks, normalize_landmarks, plot_landmarks
 from segments import lip_mask, brow_mask, face2_mask, blush_mask
 
-
 def apply_all_makeup(src: np.ndarray, is_stream: bool, features: list, show_landmarks: bool = False):
     """
     Takes in a source image and applies effects onto it.

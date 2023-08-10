@@ -1,5 +1,4 @@
 # AR MAKEUP VISUALIZATION APPLICATION INTERFACE WITH STREAMLIT
-
 import streamlit as app
 import mediapipe as mp
 import cv2
@@ -12,21 +11,15 @@ import os
 
 from landmarks import *
 from apply_makeup import *
-
 from utils import *
 from regions import makeup_segments
-
 from color_conversion import *
 
 mp_drawing = mp.solutions.drawing_utils
 mp_face_mesh = mp.solutions.face_mesh
 
-
-
-# app.title('ZEN UP🎨')
 app.title('').markdown("<div style='background-color:#160926; margin-top:-40px; margin-left:-80px; margin-right:-80px; height:80px; display: flex; justify-content: center; align-items: center;'><h3 style='font-family: Inter; color:#ffffff; font-size: 36px; font-weight: 700; text-transform: uppercase'>ZEN UP 🎨</h3></div>",
                     unsafe_allow_html=True)  # 💄
-
 app.markdown(
     """
     <style>
@@ -47,12 +40,10 @@ app.markdown(
 
 app.sidebar.title('INTERACTIONS')
 app.sidebar.markdown('---')
-
 app.sidebar.subheader('MAKEUP REGIONS')
 
 @app.cache_data(ttl=24*3600)
 @app.cache_resource(ttl=24*3600)
-
 
 def image_resize(image, width=None, height=None, inter = cv2.INTER_AREA):
     dim = None
@@ -123,12 +114,6 @@ if makeup_region is not None:
 
 app.sidebar.markdown('---')
 
-# detection_confidence = app.sidebar.slider("Minimum confidence", key="dc", min_value=0.0, max_value=1.0, value=0.5, label_visibility="hidden")
-# tracking_confidence = app.sidebar.slider("Minimum confidence", key="tc", min_value=0.0, max_value=1.0, value=0.5, label_visibility="hidden")
-
-
-app.set_option('deprecation.showfileUploaderEncoding',False)
-
 # record = app.sidebar.button("Record")
 path = r"media/videos/video-detect.mp4"
 vid2Frame = app.empty();
@@ -141,7 +126,6 @@ height2 = int(vid2.get(cv2.CAP_PROP_FRAME_HEIGHT))
 fps_input2 = int(vid2.get(cv2.CAP_PROP_FPS))
 
 # app.markdown("**Frame Rate (FPS)**")
-
 # app.write(f"<h1 style='text-align: center; color: blue;'>{fps_input2}</h1>", unsafe_allow_html=True)
 
 
@@ -153,7 +137,6 @@ fps2 = 0
 i2 = 0
 
 download_button = app.button('Save Look', disabled=False)
-
 
 if apply_button:
         # app.write(makeup)
@@ -170,6 +153,7 @@ threshold_fps = 15  # Set your desired threshold FPS value
 screenshot_count = 0
 show_points = False
 
+# loop to stream video frames
 while vid2.isOpened():
 
     i2+= 1
@@ -217,17 +201,20 @@ while vid2.isOpened():
     fps = 1 / (currTime - prevTime)
     prevTime = currTime
 
-    # # Check if FPS exceeds the threshold
-    # if fps > threshold_fps:
-    #     successful_frames += 1
+    # Test 
+    # Check if FPS exceeds the threshold
+    if fps > threshold_fps:
+        successful_frames += 1
     
-    # total_frames += 1
+    total_frames += 1
 
     # app.write(f"<h1 style='text-align: center; color: blue;'>{int(fps)}</h1>", unsafe_allow_html=True)
 
-    # # Calculate percentage of successfully tracked frames
-    # success_rate = (successful_frames / total_frames) * 100
-    # print(f"Percentage of successfully tracked frames: {success_rate:.2f}%")
+    # Calculate percentage of successfully tracked frames
+    success_rate = (successful_frames / total_frames) * 100
+    print(f"Percentage of successfully tracked frames: {success_rate:.2f}%")
+
+    # # WRITE DATA INTO FILE
     # data = [successful_frames, total_frames,int(fps), round(success_rate, 2)]
 
     # # Open the CSV file in append mode and create a CSV writer object
@@ -245,7 +232,6 @@ while vid2.isOpened():
     vid2Frame.image(frame2, channels='BGR', use_column_width=True)
 
 vid2.release()
-
 out2.release()
 cv2.destroyAllWindows()
 
