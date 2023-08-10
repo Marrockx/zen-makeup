@@ -1,2 +1,3 @@
 See README.md file for how to run application locally
 Live url with static video - https://zen-up.streamlit.app/
+Github repository url - https://github.com/Marrockx/zen-makeup
