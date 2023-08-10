@@ -1,7 +1,5 @@
 # AR MAKEUP VISUALIZATION APPLICATION INTERFACE WITH STREAMLIT
 
-#   comment to remove in lowercase
-
 import streamlit as app
 import mediapipe as mp
 import cv2
@@ -132,7 +130,7 @@ app.sidebar.markdown('---')
 app.set_option('deprecation.showfileUploaderEncoding',False)
 
 # record = app.sidebar.button("Record")
-path = r"./videos/video-detect.mp4"
+path = r"media/videos/video-detect.mp4"
 vid2Frame = app.empty();
 
 vid2 = cv2.VideoCapture(path)
@@ -149,7 +147,7 @@ fps_input2 = int(vid2.get(cv2.CAP_PROP_FPS))
 
 # recording
 codec2 = cv2.VideoWriter_fourcc('V', 'P', '0', '9') # type: ignore
-out2 = cv2.VideoWriter('./videos/out2.mp4', codec2, fps_input2, (width2, height2))
+out2 = cv2.VideoWriter('media/videos/output/out2.mp4', codec2, fps_input2, (width2, height2))
     
 fps2 = 0
 i2 = 0
@@ -195,10 +193,11 @@ while vid2.isOpened():
             if download_button: 
                 screenshot_count += 1;
 
-                filename = f"zenup_look_{screenshot_count}.jpg"
+                # filename = f"zenup_look_{screenshot_count}.jpg"
+                filename = f"zenup_look.jpg"
                 cv2.imwrite(filename, frame2)
                 app.download_button(label='Download', data=open(filename, 'rb'), file_name=filename)
-                os.remove(filename)
+                # os.remove(filename)
                 break
             
             # if show_points is False:

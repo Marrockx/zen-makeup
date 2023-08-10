@@ -2,9 +2,9 @@
 
 ## Augmented Reality Makeup Visualization Application
 
-Name of Application - Zen Look
+Name of Application - Zen Up
 
-Aim of project:
+Aim of project: The aim of this project is to develop a system that can visualise makeup on users in augmented reality and can function in real time.
 
 ## Tools Used
 
@@ -20,4 +20,8 @@ Aim of project:
 
 - `pip install -r requirements.txt`
 
-- `streamlit run zen_makeup`
+- `streamlit run main/zenup_makeup.py`
+
+### Sample Output
+
+<img src='./media/download/zenup_look.jpg'>

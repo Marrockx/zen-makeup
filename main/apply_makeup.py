@@ -36,7 +36,7 @@ def apply_all_makeup(src: np.ndarray, is_stream: bool, features: list, show_land
                 blush_landmarks = normalize_landmarks(
                     ret_landmarks, height, width, cheeks)
                 mask = blush_mask(output, blush_landmarks,
-                                  feature['color'], 50)
+                                feature['color'], 50)
                 output = cv2.addWeighted(output, 1.0, mask, 0.3, 0.0)
 
             elif feature['name'] == 'foundation':
